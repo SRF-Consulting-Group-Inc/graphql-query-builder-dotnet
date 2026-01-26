@@ -21,10 +21,11 @@ jobs:
         run: dotnet restore
 
       - name: Pack
-        run: dotnet pack -c Release
+        run: dotnet pack ./src/GraphQL.Query.Builder/GraphQL.Query.Builder.csproj -c Release -o ./artifacts
 
       - name: Push to GHCR
         run: |
-          dotnet nuget push **/*.nupkg \
+          dotnet nuget push ./artifacts/*.nupkg \
             --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json \
-            --api-key ${{ secrets.GITHUB_TOKEN }}
+            --api-key ${{ secrets.GITHUB_TOKEN }} \
+            --skip-duplicate
