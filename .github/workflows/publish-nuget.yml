@@ -2,6 +2,11 @@ name: Publish NuGet
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version (e.g., 1.0.0)'
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -20,8 +25,11 @@ jobs:
       - name: Restore
         run: dotnet restore
 
+      - name: Build
+        run: dotnet build -c Release --no-restore
+
       - name: Pack
-        run: dotnet pack ./src/GraphQL.Query.Builder/GraphQL.Query.Builder.csproj -c Release -o ./artifacts
+        run: dotnet pack ./src/GraphQL.Query.Builder/GraphQL.Query.Builder.csproj -c Release --no-build -o ./artifacts -p:Version=${{ inputs.version }}
 
       - name: Push to GHCR
         run: |
