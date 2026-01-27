@@ -4,14 +4,25 @@
 
 A tool to build GraphQL query from a C# model.
 
-[![Build Status](https://dev.azure.com/charlesdevandiere/charlesdevandiere/_apis/build/status/charlesdevandiere.graphql-query-builder-dotnet?branchName=master)](https://dev.azure.com/charlesdevandiere/charlesdevandiere/_build/latest?definitionId=3&branchName=master)
-![Coverage](https://img.shields.io/azure-devops/coverage/charlesdevandiere/charlesdevandiere/3/master)
-[![Nuget](https://img.shields.io/nuget/v/GraphQL.Query.Builder.svg?color=blue&logo=nuget)](https://www.nuget.org/packages/GraphQL.Query.Builder)
-[![Downloads](https://img.shields.io/nuget/dt/GraphQL.Query.Builder.svg?logo=nuget)](https://www.nuget.org/packages/GraphQL.Query.Builder)
+## Publishing to GitHub Packages
 
-See complete documentation [here](https://charlesdevandiere.github.io/graphql-query-builder-dotnet/)
+To publish a new version of the NuGet package:
 
-See sample [here](https://github.com/charlesdevandiere/graphql-query-builder-dotnet/tree/master/sample/Pokedex)
+1. Update the version in `src/GraphQL.Query.Builder/GraphQL.Query.Builder.csproj`
+
+2. Pack the project:
+   ```shell
+   dotnet pack src/GraphQL.Query.Builder -c Release
+   ```
+
+3. Push to GitHub Packages:
+   ```shell
+   dotnet nuget push src/GraphQL.Query.Builder/bin/Release/SRF.GraphQL.Query.Builder.{VERSION}.nupkg \
+     --source "SRF Packages (GitHub)" \
+     --api-key YOUR_GITHUB_PAT
+   ```
+
+   Replace `{VERSION}` with the version number and `YOUR_GITHUB_PAT` with a GitHub Personal Access Token that has `write:packages` scope.
 
 ## Install
 
